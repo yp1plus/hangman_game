@@ -10,7 +10,6 @@ import image3 from './pictures/3.png'
 import image4 from './pictures/4.png'
 import image5 from './pictures/5.png'
 import image6 from './pictures/6.png'
-import words from './br-sem-acentos.txt'
 
 ReactDOM.render(
   <React.StrictMode>
