@@ -10,10 +10,11 @@ import image3 from './pictures/3.png'
 import image4 from './pictures/4.png'
 import image5 from './pictures/5.png'
 import image6 from './pictures/6.png'
+import words from './br-sem-acentos.txt'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Hangman tries = {6} words = {["aviao", "bala"]} frames = {[image0, image1, image2, image3, image4, image5, image6]}/>
+      <Hangman tries = {6} frames = {[image0, image1, image2, image3, image4, image5, image6]}/>
   </React.StrictMode>,
   document.getElementById('root')
 );

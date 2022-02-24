@@ -1,4 +1,5 @@
 import React from 'react';
+import wordsDatabase from './br-sem-acentos.txt'
 
 class Hangman extends React.Component {
     constructor(props){
@@ -6,13 +7,24 @@ class Hangman extends React.Component {
         this.state = {
             numberTries: props.tries,
             guessedLetters: new Set(),
-            words: props.words.sort(() => Math.random() - 0.5),
+            words: [],
             points: 0,
         };
         this.handleGuess = this.handleGuess.bind(this);
         this.goToNextWord = this.goToNextWord.bind(this);
         this.setPoints = this.setPoints.bind(this);
         this.won = this.won.bind(this);
+    }
+
+    readFile(){
+        fetch(wordsDatabase)
+        .then(response => response.text())
+        .then(text => {
+            const arrayWords = text.split("\n");
+            this.setState({
+                words: arrayWords.sort(() => Math.random() - 0.5),
+            });
+      });
     }
 
     won(){
@@ -73,8 +85,13 @@ class Hangman extends React.Component {
         ));
     }
 
+    componentDidMount(){
+        this.readFile();
+    }
+
     render(){
         const gameOver = this.state.numberTries === 0;
+        
 
         return (
             <div className = "flex flex-col justify-center items-center">
@@ -106,6 +123,7 @@ class Hangman extends React.Component {
                         className=  {(this.won() && this.state.words.length > 0) ? "inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                         : "bg-blue-500 text-xs leading-tight uppercase rounded shadow-md text-white font-medium py-2.5 px-6 rounded opacity-50 cursor-not-allowed"}
                         onClick = {this.goToNextWord}
+                        disabled = {!this.won() || this.state.words.length === 0}
                     >
                         Prosseguir
                     </button>
